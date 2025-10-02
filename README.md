@@ -39,10 +39,7 @@ En serverless API för att skapa och hantera quiz med geografiska frågor.
 2. **Öppna Postman**
 3. **Klicka "Import"** 
 4. **Dra och släpp** eller välj filen `quiztopia-postman-collection.json`
-5. **Uppdatera baseUrl** variabel:
-   - Klicka på "Quiztopia API" collection
-   - Gå till "Variables" tab
-   - Ändra `baseUrl` till din AWS API Gateway URL
+5. **Uppdatera baseUrl** 
 
 ### Testordning:
 
