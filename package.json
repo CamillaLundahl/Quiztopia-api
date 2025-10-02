@@ -1,0 +1,28 @@
+{
+  "name": "quiztopia-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "serverless offline"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "serverless-dotenv-plugin": "^6.0.0",
+    "serverless-offline": "^14.4.0"
+  },
+  "dependencies": {
+    "@middy/core": "^6.4.5",
+    "@middy/http-cors": "^6.4.5",
+    "@middy/http-error-handler": "^6.4.5",
+    "@middy/http-json-body-parser": "^6.4.5",
+    "aws-sdk": "^2.1692.0",
+    "bcryptjs": "^3.0.2",
+    "jsonwebtoken": "^9.0.2",
+    "uuid": "^9.0.1"
+  }
+}

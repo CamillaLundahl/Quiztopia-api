@@ -1,0 +1,98 @@
+service: quiztopia-api
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: eu-north-1
+  stage: dev
+  environment:
+    DYNAMODB_TABLE: ${self:service}-${self:provider.stage}
+    JWT_SECRET: "gP#7sYx@2FvW!q8zM$4tLpKjHnR9bXcE6uI_aO0dF5rG3hJ1kL2mN7pQ0wXyZ8vU_eR4sT"
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
+
+functions:
+  register:
+    handler: src/handlers/auth.register
+    events:
+      - http:
+          path: auth/register
+          method: post
+          cors: true
+
+  login:
+    handler: src/handlers/auth.login
+    events:
+      - http:
+          path: auth/login
+          method: post
+          cors: true
+
+  getAllQuizzes:
+    handler: src/handlers/quiz.handleGetAllQuizzes
+    events:
+      - http:
+          path: quiz
+          method: get
+          cors: true
+
+  createQuiz:
+    handler: src/handlers/quiz.handleCreateQuiz
+    events:
+      - http:
+          path: quiz
+          method: post
+          cors: true
+
+  getQuizById:
+    handler: src/handlers/quiz.handleGetQuizById
+    events:
+      - http:
+          path: quiz/{quizId}
+          method: get
+          cors: true
+
+  deleteQuiz: 
+    handler: src/handlers/quiz.handleDeleteQuiz
+    events:
+      - http:
+          path: quiz/{quizId}
+          method: delete
+          cors: true
+
+  addQuestion:
+    handler: src/handlers/quiz.handleAddQuestion
+    events:
+      - http:
+          path: quiz/{quizId}/question
+          method: post
+          cors: true
+
+resources:
+  Resources:
+    QuizTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.DYNAMODB_TABLE}
+        AttributeDefinitions:
+          - AttributeName: PK
+            AttributeType: S
+          - AttributeName: SK
+            AttributeType: S
+        KeySchema:
+          - AttributeName: PK
+            KeyType: HASH
+          - AttributeName: SK
+            KeyType: RANGE
+        BillingMode: PAY_PER_REQUEST
